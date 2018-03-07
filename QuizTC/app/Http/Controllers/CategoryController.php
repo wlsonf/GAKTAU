@@ -9,13 +9,18 @@ class CategoryController extends Controller
     
     public function read(){
     	$data = Category::all();
-    	echo $data;    	
+    	return $data;    	
     }
 
     public function create(Request $request){
     	$data = ['name' => $request->name];	
     	Category::create($data);
-    	return $data;
+        if($data == 1){
+            return "success"
+        }
+        else{
+            echo "Failed to Create. Please Fill All the Columns!"
+        }
     }
 
     public function update(Request $request){
@@ -23,12 +28,22 @@ class CategoryController extends Controller
     	$data = Category::where('id', $request->id)->update(['name' => $request->name
     	]);
 
-    	return $data;
+        if($data == 1){
+            return $data
+        }
+        else{
+            echo "Failed to Update. Please Fill All the Blanks!"
+        }
     }
     
     public function delete(Request $request){
     	$data = Category::where('id',$request->id)->delete();
-    	return $data;
+        if($data == 1){
+            return $data
+        }
+        else{
+            echo "Failed to Delete. Make Sure to fill the right ID!"
+        }
   	 	
     } 
 

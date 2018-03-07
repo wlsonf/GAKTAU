@@ -6,11 +6,6 @@ use Illuminate\Http\Request;
 use App\Item;
 class ItemController extends Controller
 {
-    public function read(){
-    	$data = item::all();
-    	return $data;
-    }
-
     public function create(Request $request){
     	$data = [
     		'category_id' => $request->category_id,
@@ -18,11 +13,16 @@ class ItemController extends Controller
     		'price' => $request->price,
     		'stock' => $request->stock,
     	];	
-    	item::create($newData);
-    	return $data;
+    	item::create($data);
+    	if($data == 1){
+            return "success"
+        }
+        else{
+            echo "Failed to Create. Please Fill All the Columns!"
+        }
     }
 
-          public function read(){
+    public function read(){
     	$data = item::all();
     	return $data;
     }
@@ -34,15 +34,25 @@ class ItemController extends Controller
     		'name' => $request->name,    		
     		'price' => $request->price,
     		'stock' => $request->stock,
-    	]
-    	);
-    	return $data;
+    	]);
+        // $data->save();
+        if($data == 1){
+            return $data
+        }
+        else{
+            echo "Failed to Update. Please Fill All the Blanks!"
+        }
     }
 
 
     public function delete(Request $request){
     	$data = item::where('id',$request->id)->delete();
-   	 	return $data;
+        if($data == 1){
+            return $data
+        }
+        else{
+            echo "Failed to Delete. Make Sure to fill the right ID!"
+        }
     }
     
 }
